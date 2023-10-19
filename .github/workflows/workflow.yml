@@ -1,7 +1,6 @@
 name: deploy-test-LA
 
 on:
-  push:
   workflow_dispatch:
   
 
