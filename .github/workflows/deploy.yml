@@ -56,17 +56,6 @@ jobs:
         - name: Display downloaded files
           run: ls -l
           working-directory: build-art/
-        - name: Get publish Profile
-          id: publishprofile
-          uses: azure/powershell@v1
-          with:
-            inlineScript: |
-              $profile = Get-AzWebAppPublishingProfile `
-                  -ResourceGroupName ${{ env.resourceGroup }} `
-                  -Name ${{ env.Logicapp_Name }}
-              $profile = $profile.Replace("`r", "").Replace("`n", "")
-              Write-Output "::set-output name=profile::$profile"
-            azPSVersion: latest
         - name: Deploy Logic App
           uses:  Azure/functions-action@v1.3.1
           id: la
