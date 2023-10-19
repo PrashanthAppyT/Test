@@ -56,20 +56,9 @@ jobs:
         - name: Display downloaded files
           run: ls -l
           working-directory: build-art/
-        - name: Get publish Profile
-          id: publishprofile
-          uses: azure/powershell@v1
-          with:
-            inlineScript: |
-              $profile = Get-AzWebAppPublishingProfile `
-                  -ResourceGroupName ${{ env.resourceGroup }} `
-                  -Name ${{ env.Logicapp_Name }}
-              $profile = $profile.Replace("`r", "").Replace("`n", "")
-              Write-Output "::set-output name=profile::$profile"
-            azPSVersion: latest
-        - name: Deploy Logic App
-          uses:  Azure/functions-action@v1.3.1
-          id: la
-          with:
-            app-name: vscodelogicapp1 
-            package: build-art/${{ github.run_id }}.zip
+        - name: Deploy Logic App Workflow
+          run: |
+            az logic workflow create --definition "@deploy/workflows/workflow.json" --location westeurope --name LA-GH-Test --resource-group DataResources
+      
+
+
