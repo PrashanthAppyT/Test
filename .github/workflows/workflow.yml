@@ -1,6 +1,8 @@
 name: deploy-test-LA
 
 on:
+  push:
+    - main
   workflow_dispatch:
   
 
@@ -11,13 +13,10 @@ permissions:
 
 jobs:
   #Deploy to the dev environment
-  deploy-dev:
-    uses: ./.github/workflows/deploy.yml
-    with:
-      resourceGroupName: rg-vo-gpp-logicapp-dev-weu-001
-      azureSubscription: sub-lz-gpp-dev-001
-      serviceConnection: sub-lz-gpp-dev-001
-      appName: stdlogapp-vo-gpp-dev-weu-001
-      subscriptionId: 5159bd03-b515-48ea-a32f-55ef5ea3f19b
-    secrets: 
-      AZURE_CREDENTIALS : ${{ secrets.AZURE_CREDENTIALS }}  
+  login:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Azure Login
+       uses: azure/login@v1
+       with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
