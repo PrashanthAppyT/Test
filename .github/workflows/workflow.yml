@@ -3,7 +3,7 @@ name: deploy-Test-LA
 on:
   push:
     branches:
-        - main
+        - origin/main
   workflow_dispatch:
   
 
