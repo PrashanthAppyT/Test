@@ -6,13 +6,7 @@ on:
       resourceGroupName:
         required: true
         type: string
-      azureSubscription:
-        required: true
-        type: string
       appName:
-        required: true
-        type: string
-      serviceConnection:
         required: true
         type: string
       subscriptionId:
