@@ -34,7 +34,7 @@ jobs:
         - name: Archive Files
           uses: vimtor/action-zip@v1.1
           with:
-            files: './deploy/workflows/workflow-FileTransferToGpp-Orch'
+            files: './deploy/workflows'
             recursive: true
             dest: ${{ github.run_id }}.zip
         - name: Publish Pipeline Artifact - Logic App
@@ -62,5 +62,5 @@ jobs:
           uses:  Azure/functions-action@v1.3.1
           id: la
           with:
-            app-name: stdlogapp-vo-gpp-dev-weu-001
+            app-name: LA-GH-Test
             package: build-art/${{ github.run_id }}.zip
