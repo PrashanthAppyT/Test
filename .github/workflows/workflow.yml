@@ -1,4 +1,4 @@
-name: deploy-VanOord-LA
+name: deploy-Test-LA
 
 on:
   workflow_dispatch:
