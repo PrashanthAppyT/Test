@@ -56,5 +56,5 @@ jobs:
           uses:  Azure/functions-action@v1.3.1
           id: la
           with:
-            app-name: LA-GH-Test
+            app-name: vscodelogicapp1 
             package: build-art/${{ github.run_id }}.zip
