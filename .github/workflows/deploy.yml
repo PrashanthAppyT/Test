@@ -1,0 +1,66 @@
+name: deploy-packages
+
+on:
+  workflow_call:
+    inputs:
+      resourceGroupName:
+        required: true
+        type: string
+      azureSubscription:
+        required: true
+        type: string
+      appName:
+        required: true
+        type: string
+      serviceConnection:
+        required: true
+        type: string
+      subscriptionId:
+        required: true
+        type: string
+      
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+jobs:
+   package:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Azure Login
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        - uses: actions/checkout@v2
+        - name: Archive Files
+          uses: vimtor/action-zip@v1.1
+          with:
+            files: './deploy/workflows/workflow-FileTransferToGpp-Orch'
+            recursive: true
+            dest: ${{ github.run_id }}.zip
+        - name: Publish Pipeline Artifact - Logic App
+          uses: actions/upload-artifact@master
+          with:
+            path: ${{ github.run_id }}.zip
+            name: build-artifact
+   download-deploy-logicApp:
+    runs-on : ubuntu-latest
+    needs: package
+    steps:
+        - name: Download Artifacts
+          uses: actions/download-artifact@master
+          with:
+            name: build-artifact
+            path: build-art/        
+        - name: Display downloaded files
+          run: ls -l
+          working-directory: build-art/
+        - name: Azure Login
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        - name: Deploy Logic App
+          uses:  Azure/functions-action@v1.3.1
+          id: la
+          with:
+            app-name: stdlogapp-vo-gpp-dev-weu-001
+            package: build-art/${{ github.run_id }}.zip
