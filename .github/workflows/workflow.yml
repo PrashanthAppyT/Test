@@ -1,8 +1,6 @@
-name: deploy-test-LA
+name: deploy-VanOord-LA
 
 on:
-  push:
-    branches: main
   workflow_dispatch:
   
 
@@ -13,10 +11,11 @@ permissions:
 
 jobs:
   #Deploy to the dev environment
-  login:
-    runs-on: ubuntu-latest
-    steps:
-     - name: Azure Login
-       uses: azure/login@v1
-       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+  deploy-dev:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      resourceGroupName: DataResources
+      appName: vscodelogicapp1
+      subscriptionId: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+    secrets: 
+      AZURE_CREDENTIALS : ${{ secrets.AZURE_CREDENTIALS }}  
