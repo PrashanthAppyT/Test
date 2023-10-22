@@ -1,7 +1,7 @@
 name: deploy-packages
 
 env:
-  Logicapp_Name: 'vscodelogicapp1'
+  Logicapp_Name: 'LA-STD-VA'
   resourceGroup: 'DataResources'
 on:
   workflow_call:
@@ -60,5 +60,5 @@ jobs:
           uses:  Azure/functions-action@v1.3.1
           id: la
           with:
-            app-name: vscodelogicapp1 
+            app-name: LA-STD-VA 
             package: build-art/${{ github.run_id }}.zip
