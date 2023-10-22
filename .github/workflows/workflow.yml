@@ -62,5 +62,5 @@ jobs:
       uses: Azure/functions-action@v1.3.1
       id: la
       with:
-        app-name: ${{env.RG_LA}}
+        app-name: ${{env.LA_NAME}}
         package: build-art/${{ github.run_id }}.zip
