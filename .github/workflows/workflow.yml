@@ -27,14 +27,17 @@ jobs:
     steps: 
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Package logic
-      run: (cd deploy/workflows; mkdir -p ../output; zip -r ../output/logic.zip .)
-    - name: Upload app zip package
-      uses: actions/upload-artifact@v2
+    - name: Archive Files
+      uses: vimtor/action-zip@v1.1
       with:
-        name: logic
-        path: ./output/
-        retention-days: 1 
+        files: './deploy/workflows'
+        recursive: true
+        dest: ${{ github.run_id }}.zip
+    - name: Publish Pipeline Artifact - Logic App
+      uses: actions/upload-artifact@master
+      with:
+        path: ${{ github.run_id }}.zip
+        name: build-artifact
 
   logic_app_deploy: 
     name: Deploy 
@@ -52,8 +55,8 @@ jobs:
         enable-AzPSSession: true 
     - uses: actions/download-artifact@master
       with:
-        name: logic
-        path: ./output/
+        name: build-artifact
+        path: build-art/
         
     - name: Get publish Profile
       id: publishprofile
@@ -72,5 +75,5 @@ jobs:
       id: la
       with:
         app-name: ${{secrets.RG_LA}}
-        package: './output/logic.zip'
+        package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{steps.publishprofile.outputs.profile}}
