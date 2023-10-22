@@ -1,24 +1,76 @@
-name: deploy-Test-LA
+# Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: (classic) Build and Deploy Logic App. 
+
+env:
+  LA_NAME: 'LA-STD-VA'
+  RG_LA: 'DataResources'
 
 on:
+  workflow_dispatch:
+    # Trigger the workflow every time the build workflow ran to completion
+  workflow_run:
+    workflows:
+      - (classic) Logic App Infrastructure as Code Pipeline.
+    types:
+      - completed
+  # Triggers when an environment file has been changed  
   push:
     branches:
-        - origin/main
-  workflow_dispatch:
-  
-
-permissions:
-  id-token: write
-  contents: read
-
+      - feature/DSLApp
 
 jobs:
-  #Deploy to the dev environment
-  deploy-dev:
-    uses: ./.github/workflows/deploy.yml
-    with:
-      resourceGroupName: DataResources
-      appName: vscodelogicapp1 
-      subscriptionId: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
-    secrets: 
-      AZURE_CREDENTIALS : ${{ secrets.AZURE_CREDENTIALS }}  
+  logic_app_build: 
+    name: Build 
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Package logic
+      run: (cd deploy/workflows; mkdir -p ../output; zip -r ../output/logic.zip .)
+    - name: Upload app zip package
+      uses: actions/upload-artifact@v2
+      with:
+        name: logic
+        path: ./output/
+        retention-days: 1 
+
+  logic_app_deploy: 
+    name: Deploy 
+    runs-on: ubuntu-latest
+    needs: [logic_app_build]
+    environment: 
+      name: Dev
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v1    
+    - name: Login via Az module
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        enable-AzPSSession: true 
+    - uses: actions/download-artifact@master
+      with:
+        name: logic
+        path: ./output/
+        
+    - name: Get publish Profile
+      id: publishprofile
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          $profile = Get-AzWebAppPublishingProfile `
+              -ResourceGroupName ${{ env.RG_LA }} `
+              -Name ${{ env.LA_NAME }}
+          $profile = $profile.Replace("`r", "").Replace("`n", "")
+          Write-Output "::set-output name=profile::$profile"
+        azPSVersion: latest
+
+    - name: Deploy to Azure Logic App
+      uses: Azure/functions-action@v1.3.1
+      id: la
+      with:
+        app-name: ${{secrets.RG_LA}}
+        package: './output/logic.zip'
+        publish-profile: ${{steps.publishprofile.outputs.profile}}
