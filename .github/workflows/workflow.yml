@@ -59,7 +59,7 @@ jobs:
         path: build-art/
 
     - name: Deploy to Azure Logic App
-      uses: Azure/functions-action@v1.5.1
+      uses: Azure/functions-action@v1.4.7
       id: la
       with:
         app-name: ${{env.LA_NAME}}
