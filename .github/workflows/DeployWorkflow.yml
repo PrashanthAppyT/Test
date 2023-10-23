@@ -44,5 +44,5 @@ jobs:
        with:
         app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
-        publish-profile: ./settings/publishProfile.publishsettings
+        publish-profile: ./settings/LA-STD-VA.PublishSettings
         
