@@ -5,10 +5,10 @@ on:
         - feature/DSLApp
   workflow_dispatch:
     inputs:
-      RG_LA:
+      subscriptionId:
         description: 'SubscriptionId'
         required: true
-      LA_NAME:
+      resourceGroupName:
         description: 'Resource group name'
         required: true
 
@@ -41,8 +41,8 @@ jobs:
        with:
          inlineScript: |
           $profile = Get-AzWebAppPublishingProfile `
-              -ResourceGroupName ${{github.event.inputs.RG_LA}}`
-              -Name ${{github.event.inputs.LA_NAME}}
+              -ResourceGroupName ${{inputs.resourceGroupName}}`
+              -Name ${{inputs.subscriptionId}}
           $profile = $profile.Replace("`r", "").Replace("`n", "")
           Write-Output "::set-output name=profile::$profile"
          azPSVersion: latest
