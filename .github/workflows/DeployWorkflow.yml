@@ -5,11 +5,8 @@ on:
         - feature/DSLApp
   workflow_dispatch:
     inputs:
-      subscriptionId:
-        description: 'SubscriptionId'
-        required: true
-      resourceGroupName:
-        description: 'Resource group name'
+      appName:
+        description: 'app Name'
         required: true
 
 jobs:
