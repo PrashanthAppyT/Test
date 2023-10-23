@@ -57,7 +57,7 @@ jobs:
           run: ls -l
           working-directory: build-art/
         - name: Deploy Logic App
-          uses:  Azure/functions-action@v1.3.1
+          uses:  azure/functions-action@v1
           id: la
           with:
             app-name: LA-STD-VA 
