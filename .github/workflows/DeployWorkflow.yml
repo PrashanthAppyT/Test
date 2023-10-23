@@ -43,6 +43,6 @@ jobs:
        uses: Azure/functions-action@v1
        id: la
        with:
-        app-name: ${{inputs.appName}}
+        app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
         
