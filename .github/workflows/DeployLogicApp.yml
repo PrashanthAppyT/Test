@@ -29,7 +29,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{github.event.inputs.subscriptionId}}
-          resourceGroupName: ${{github.event.inputs.resourceGroupName}}
+          subscriptionId: DataResources
+          resourceGroupName: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
           template: ./ARMTemplates/LA_Standard_Basic.json
           parameters: ./ARMTemplates/LA_Standard_Basic_Param.json
