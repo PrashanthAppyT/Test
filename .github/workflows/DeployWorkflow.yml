@@ -40,9 +40,9 @@ jobs:
        uses: azure/powershell@v1
        with:
          inlineScript: |
-          $profile = Get-AzWebAppPublishingProfile `
-              -ResourceGroupName ${{inputs.resourceGroupName}}`
-              -Name ${{inputs.subscriptionId}}
+          $profile = Get-AzWebAppPublishingProfile 
+              -ResourceGroupName "DataResources"
+              -Name "LA-STD-VA"
           $profile = $profile.Replace("`r", "").Replace("`n", "")
           Write-Output "::set-output name=profile::$profile"
          azPSVersion: latest
@@ -56,6 +56,6 @@ jobs:
        uses: Azure/functions-action@v1
        id: la
        with:
-        app-name: ${{github.event.inputs.RG_LA}}
+        app-name: ${{inputs.appName}}
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{steps.laapp.outputs.profile}}
