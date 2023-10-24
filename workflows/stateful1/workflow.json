@@ -1,0 +1,252 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "For_each": {
+                "actions": {
+                    "Condition": {
+                        "actions": {
+                            "Convert_time_zone_for_archive_folder": {
+                                "inputs": {
+                                    "baseTime": "@body('Current_time_for_archive_timestamp')",
+                                    "destinationTimeZone": "W. Europe Standard Time",
+                                    "formatString": "yyyyMMdd_hhmmss",
+                                    "sourceTimeZone": "UTC"
+                                },
+                                "kind": "ConvertTimezone",
+                                "runAfter": {
+                                    "Current_time_for_archive_timestamp": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "Expression"
+                            },
+                            "Convert_time_zone_for_error_folder": {
+                                "inputs": {
+                                    "baseTime": "@body('Current_time_for_error_timestamp')",
+                                    "destinationTimeZone": "W. Europe Standard Time",
+                                    "formatString": "yyyyMMdd_hhmmss",
+                                    "sourceTimeZone": "UTC"
+                                },
+                                "kind": "ConvertTimezone",
+                                "runAfter": {
+                                    "Current_time_for_error_timestamp": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "Expression"
+                            },
+                            "Copy_EBS_files_to_error_directory": {
+                                "inputs": {
+                                    "parameters": {
+                                        "SourceFilePath": "@item()?['path']",
+                                        "destinationFilePath": "@concat('/ebsstorage/out/error/gpp/', substring(item()?['name'],0,sub(length(item()?['name']),5)),'-',body('Convert_time_zone_for_error_folder'),'.pgp')"
+                                    },
+                                    "serviceProviderConfiguration": {
+                                        "connectionName": "AzureFile",
+                                        "operationId": "copyFile",
+                                        "serviceProviderId": "/serviceProviders/AzureFile"
+                                    }
+                                },
+                                "runAfter": {
+                                    "Convert_time_zone_for_error_folder": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "ServiceProvider"
+                            },
+                            "Copy_files_to_EBS_archive_folder": {
+                                "inputs": {
+                                    "parameters": {
+                                        "SourceFilePath": "@item()?['path']",
+                                        "destinationFilePath": "@concat('/ebsstorage/out/archive/gpp/', substring(item()?['name'],0,sub(length(item()?['name']),5)),'-',body('Convert_time_zone_for_archive_folder'),'.pgp')"
+                                    },
+                                    "serviceProviderConfiguration": {
+                                        "connectionName": "AzureFile",
+                                        "operationId": "copyFile",
+                                        "serviceProviderId": "/serviceProviders/AzureFile"
+                                    }
+                                },
+                                "runAfter": {
+                                    "Convert_time_zone_for_archive_folder": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "ServiceProvider"
+                            },
+                            "Current_time_for_archive_timestamp": {
+                                "inputs": {},
+                                "kind": "CurrentTime",
+                                "runAfter": {
+                                    "Scope": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "Expression"
+                            },
+                            "Current_time_for_error_timestamp": {
+                                "inputs": {},
+                                "kind": "CurrentTime",
+                                "runAfter": {
+                                    "Scope": [
+                                        "FAILED",
+                                        "TIMEDOUT"
+                                    ]
+                                },
+                                "type": "Expression"
+                            },
+                            "Delete_EBS_Source_file": {
+                                "inputs": {
+                                    "parameters": {
+                                        "fileId": "@item()?['path']"
+                                    },
+                                    "serviceProviderConfiguration": {
+                                        "connectionName": "AzureFile",
+                                        "operationId": "deleteFile",
+                                        "serviceProviderId": "/serviceProviders/AzureFile"
+                                    }
+                                },
+                                "runAfter": {
+                                    "Copy_files_to_EBS_archive_folder": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "ServiceProvider"
+                            },
+                            "Delete_EBS_Sourcefile": {
+                                "inputs": {
+                                    "parameters": {
+                                        "fileId": "@items('For_each')?['path']"
+                                    },
+                                    "serviceProviderConfiguration": {
+                                        "connectionName": "AzureFile",
+                                        "operationId": "deleteFile",
+                                        "serviceProviderId": "/serviceProviders/AzureFile"
+                                    }
+                                },
+                                "runAfter": {
+                                    "Copy_EBS_files_to_error_directory": [
+                                        "SUCCEEDED"
+                                    ]
+                                },
+                                "type": "ServiceProvider"
+                            },
+                            "Scope": {
+                                "actions": {
+                                    "Get_file_content_using_path": {
+                                        "inputs": {
+                                            "parameters": {
+                                                "fileId": "@item()?['path']",
+                                                "inferContentType": true
+                                            },
+                                            "serviceProviderConfiguration": {
+                                                "connectionName": "AzureFile",
+                                                "operationId": "getFileContentByPath",
+                                                "serviceProviderId": "/serviceProviders/AzureFile"
+                                            }
+                                        },
+                                        "type": "ServiceProvider"
+                                    },
+                                    "Upload_file_content": {
+                                        "inputs": {
+                                            "parameters": {
+                                                "content": "@body('Get_file_content_using_path')",
+                                                "filePath": "@concat('/PwCGBL_VanOord_STG/Inbound/EBS/',item()?['name'])",
+                                                "overWriteFileIfExists": true
+                                            },
+                                            "serviceProviderConfiguration": {
+                                                "connectionName": "Sftp-3",
+                                                "operationId": "uploadFileContent",
+                                                "serviceProviderId": "/serviceProviders/Sftp"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Get_file_content_using_path": [
+                                                "SUCCEEDED"
+                                            ]
+                                        },
+                                        "type": "ServiceProvider"
+                                    }
+                                },
+                                "type": "Scope"
+                            }
+                        },
+                        "else": {
+                            "actions": {}
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "equals": [
+                                        "@item()?['isFolder']",
+                                        false
+                                    ]
+                                },
+                                {
+                                    "endsWith": [
+                                        "@items('For_each')?['name']",
+                                        "pgp"
+                                    ]
+                                }
+                            ]
+                        },
+                        "type": "If"
+                    },
+                    "List_folder": {
+                        "inputs": {
+                            "parameters": {
+                                "filesOnly": true,
+                                "folderPath": "/PwCGBL_VanOord_STG/Inbound"
+                            },
+                            "serviceProviderConfiguration": {
+                                "connectionName": "Sftp-3",
+                                "operationId": "listFolder",
+                                "serviceProviderId": "/serviceProviders/Sftp"
+                            }
+                        },
+                        "runAfter": {
+                            "Condition": [
+                                "SUCCEEDED"
+                            ]
+                        },
+                        "type": "ServiceProvider"
+                    }
+                },
+                "foreach": "@body('List_files')",
+                "runAfter": {
+                    "List_files": [
+                        "SUCCEEDED"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "List_files": {
+                "inputs": {
+                    "parameters": {
+                        "folderId": "/ebsstorage/out/gpp"
+                    },
+                    "serviceProviderConfiguration": {
+                        "connectionName": "AzureFile",
+                        "operationId": "listFolder",
+                        "serviceProviderId": "/serviceProviders/AzureFile"
+                    }
+                },
+                "runAfter": {},
+                "type": "ServiceProvider"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "triggers": {
+            "Recurrence": {
+                "recurrence": {
+                    "frequency": "Minute",
+                    "interval": 30,
+                    "timeZone": "W. Europe Standard Time"
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "kind": "Stateful"
+}
