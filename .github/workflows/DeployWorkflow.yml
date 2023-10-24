@@ -1,4 +1,4 @@
-name: DeploySimpleWorkflow
+name: DeploySimpleWorkflow2
 on:
   push:
     branches: 
