@@ -1,29 +1,61 @@
 {
-    "managedApiConnections": {
-        "sap": {
-            "api": {
-                "id": "/subscriptions/@appsetting('SubscriptionId')/providers/Microsoft.Web/locations/westeurope/managedApis/sap"
-            },
-            "authentication": {
-                "type": "ManagedServiceIdentity"
-            },
-            "connection": {
-                "id": "/subscriptions/@appsetting('SubscriptionId')/resourceGroups/portabilityWE-rg/providers/Microsoft.Web/connections/sap-portability"
-            },
-            "connectionRuntimeUrl": "@appsetting('SapConnectionRuntimeUrl')"
-        }
-    },
+    "managedApiConnections": {},
     "serviceProviderConnections": {
-        "keyVault": {
-            "displayName": "portability_client_connection",
+        "AzureFile": {
+            "displayName": "EBS-FileShare-Connection",
             "parameterValues": {
-                "VaultUri": "@appsetting('KeyVaultUri')",
-                "authProvider": {
-                    "Type": "ManagedServiceIdentity"
-                }
+                "connectionString": "@appsetting('AzureFile_connectionString')"
             },
             "serviceProvider": {
-                "id": "/serviceProviders/keyVault"
+                "id": "/serviceProviders/AzureFile"
+            }
+        },
+        "Sftp": {
+            "displayName": "GPP-Connection-Outbound",
+            "parameterValues": {
+                "disableConnectionCache": "@appsetting('Sftp_disableConnectionCache')",
+                "password": "@appsetting('Sftp_password')",
+                "portNumber": "@appsetting('Sftp_portNumber')",
+                "rootDirectory": "@appsetting('Sftp_rootDirectory')",
+                "sshHostAddress": "@appsetting('Sftp_sshHostAddress')",
+                "sshPrivateKey": "@appsetting('Sftp_13_sshPrivateKey')",
+                "sshPrivateKeyPassphrase": "@appsetting('Sftp_sshPrivateKeyPassphrase')",
+                "username": "@appsetting('Sftp_username')"
+            },
+            "serviceProvider": {
+                "id": "/serviceProviders/Sftp"
+            }
+        },
+        "Sftp-2": {
+            "displayName": "GPP_Inbound_Conn",
+            "parameterValues": {
+                "disableConnectionCache": "@appsetting('Sftp_12_disableConnectionCache')",
+                "password": "@appsetting('Sftp_12_password')",
+                "portNumber": "@appsetting('Sftp_12_portNumber')",
+                "rootDirectory": "@appsetting('Sftp_12_rootDirectory')",
+                "sshHostAddress": "@appsetting('Sftp_12_sshHostAddress')",
+                "sshPrivateKey": "@appsetting('Sftp_12_sshPrivateKey')",
+                "sshPrivateKeyPassphrase": "@appsetting('Sftp_12_sshPrivateKeyPassphrase')",
+                "username": "@appsetting('Sftp_12_username')"
+            },
+            "serviceProvider": {
+                "id": "/serviceProviders/Sftp"
+            }
+        },
+        "Sftp-3": {
+            "displayName": "GPPConnection_new",
+            "parameterValues": {
+                "disableConnectionCache": "@appsetting('Sftp_13_disableConnectionCache')",
+                "password": "@appsetting('Sftp_13_password')",
+                "portNumber": "@appsetting('Sftp_13_portNumber')",
+                "rootDirectory": "@appsetting('Sftp_13_rootDirectory')",
+                "sshHostAddress": "@appsetting('Sftp_13_sshHostAddress')",
+                "sshPrivateKey": "@appsetting('Sftp_13_sshPrivateKey')",
+                "sshPrivateKeyPassphrase": "@appsetting('Sftp_13_sshPrivateKeyPassphrase')",
+                "username": "@appsetting('Sftp_13_username')"
+            },
+            "serviceProvider": {
+                "id": "/serviceProviders/Sftp"
             }
         }
     }
