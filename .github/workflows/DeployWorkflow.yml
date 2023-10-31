@@ -48,6 +48,7 @@ jobs:
 
   AppSettings:
     runs-on: windows-latest
+    needs: [Deploy]
     steps:
     - uses: azure/login@v1
       with:
