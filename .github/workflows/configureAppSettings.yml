@@ -19,5 +19,5 @@ jobs:
     - uses: azure/appservice-settings@v1
       with:
         app-name: 'LA-STD-VA'
-        app-settings-json: '${{ secrets.APP_SETTINGS }}'
+        app-settings-json: '${{ secrets.APP_SETTINGS_SFTP }}'
       
