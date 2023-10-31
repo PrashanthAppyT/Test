@@ -1,3 +1,4 @@
+name: DeploySimpleWorkflow2
 on: [push]
 
 jobs:
