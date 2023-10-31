@@ -58,6 +58,7 @@ jobs:
         app-name: LA-STD-VA
         app-settings-json: '${{ secrets.APP_SETTINGS }}' 
         general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' 
+        publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
       id: settings
     - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
     - run: |
