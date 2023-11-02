@@ -1,8 +1,8 @@
-name: DeploySimpleWorkflow2
+name: DeploySimpleWorkflow
 on:
   push:
-    branches:
-      -feature/DSLAPPServiceSettings
+    branches: 
+        - feature/DSLAPPServiceSettings
   workflow_dispatch:
     inputs:
       appName:
