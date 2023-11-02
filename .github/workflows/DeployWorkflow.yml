@@ -1,1 +1,47 @@
+name: DeploySimpleWorkflow2
 
+  workflow_dispatch:
+    inputs:
+      appName:
+        description: 'app Name'
+        required: true
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Easy Zip Files
+        uses: vimtor/action-zip@v1
+        with:
+          dest: ${{ github.run_id }}.zip
+          files: ./workflows
+      - uses: actions/upload-artifact@master
+        with:
+          name: build-artifact
+          path: ${{ github.run_id }}.zip
+  Deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [Build] 
+    steps:
+     - uses: azure/login@v1
+       with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        enable-AzPSSession: true
+
+     - uses: actions/download-artifact@master
+       with:
+        name: build-artifact
+        path: build-art/
+
+     - name: Deploy to Azure Logic App
+       uses: Azure/webapps-deploy@v2
+       with:
+        app-name: LA-STD-VA
+        package: build-art/${{ github.run_id }}.zip
+        publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
+     - uses: azure/appservice-settings@v1
+       with:
+        app-name: LA-STD-VA
+        app-settings-json: ${{ secrets.APP_SETTINGS }}
