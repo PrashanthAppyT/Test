@@ -44,9 +44,6 @@ jobs:
         app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
-     - uses: azure/appservice-settings@v1
-       with:
-        app-name: LA-STD-VA
-        resource-group-name: DataResources
-        app-settings-json: ${{ secrets.APP_SETTINGS }}
-        
+     - name: Deploy App Service Settings
+       run: |
+           az webapp config appsettings set --resource-group DataResources --name LA-STD-VA --settings @${{ secrets.APP_SETTINGS_SFTP }}
