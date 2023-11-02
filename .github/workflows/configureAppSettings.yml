@@ -16,8 +16,9 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-    - uses: azure/appservice-settings@v1
-      with:
-        app-name: 'LA-STD-VA'
-        app-settings-json: '${{ secrets.APP_SETTINGS_SFTP }}'
+    - name: Deploy App Service Settings
+      run: |
+           az login --subscription 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+           az webapp config appsettings set --resource-group DataResources --name LA-STD-VA --settings @${{ secrets.APP_SETTINGS }}
+
       
