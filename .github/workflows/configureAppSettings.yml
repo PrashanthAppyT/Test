@@ -12,10 +12,12 @@ jobs:
       with:
         node-version: 14
     - name: Install dependencies
-      run: npm install
+      run: npm install               
+    - name: Install action-cli
+      uses: numtide/action-cli@v0.7.0
     - uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        creds: ${{secrets.AZURE_CREDENTIALS_II}}
         enable-AzPSSession: true
     - name: Deploy App Service Settings
       run: |        
