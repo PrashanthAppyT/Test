@@ -18,7 +18,8 @@ jobs:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
     - name: Deploy App Service Settings
       run: |
-           az login --subscription 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+           az login 
+           az account set --subscription 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
            az webapp config appsettings set --resource-group DataResources --name LA-STD-VA --settings @${{ secrets.APP_SETTINGS }}
 
       
