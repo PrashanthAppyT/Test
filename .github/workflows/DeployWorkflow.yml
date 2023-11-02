@@ -47,4 +47,6 @@ jobs:
      - uses: azure/appservice-settings@v1
        with:
         app-name: LA-STD-VA
+        resource-group-name: DataResources
         app-settings-json: ${{ secrets.APP_SETTINGS }}
+        
