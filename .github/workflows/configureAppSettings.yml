@@ -15,10 +15,9 @@ jobs:
       run: npm install
     - uses: azure/login@v1
       with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        creds: '${{ secrets.AZURE_CREDENTIALS_II }}'
     - name: Deploy App Service Settings
-      run: |
-           az login            
+      run: |        
            az webapp config appsettings set --resource-group DataResources --name LA-STD-VA --settings @${{ secrets.APP_SETTINGS }}
 
       
