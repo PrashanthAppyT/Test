@@ -12,11 +12,7 @@ on:
       appName:
         required: true
         type: string
-    secrets:
-      creds:
-        required: true
-      publish-profile:
-        required: true
+
 
 
 jobs:
