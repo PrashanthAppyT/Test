@@ -14,7 +14,6 @@ permissions:
 
 
 jobs:
-  
   #Deploy LA to the dev environment
   deploy-LA-dev:
     uses: ./.github/workflows/deployWorkflow.yml
@@ -24,7 +23,7 @@ jobs:
       appName: LA-STD-VA
     secrets: 
       creds: ${{secrets.AZURE_CREDENTIALS}}
-      publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}      
+      publishProfile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}      
   #Deploy LA-App Settings to the dev environment
   deploy-APPSettings-dev:
     uses: ./.github/workflows/configureAppSettings.yml
