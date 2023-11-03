@@ -12,9 +12,9 @@ on:
         required: true
         type: string
     secrets:
-      AZURE_CREDENTIALS:
+      creds:
         required: true
-      APP_SETTINGS:
+      appSettings:
         required: true
 
 jobs:
