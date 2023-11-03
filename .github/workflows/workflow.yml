@@ -22,9 +22,6 @@ jobs:
       environmentType: dev
       resourceGroupName: DataResources
       appName: LA-STD-VA
-    secrets:
-      creds: ${{ secrets.AZURE_CREDENTIALS }}
-      publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
   #Deploy LA-App Settings to the dev environment
   deploy-APPSettings-dev:
     uses: ./.github/workflows/configureAppSettings.yml
