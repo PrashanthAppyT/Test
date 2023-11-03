@@ -51,10 +51,6 @@ jobs:
      - name: Deploy to Azure Logic App
        uses: Azure/webapps-deploy@v2
        with:
-        app-name: LA-STD-VA
+        app-name: ${{ inputs.appName }}
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
-     - uses: azure/appservice-settings@v1
-       with: 
-         app-name: LA-STD-VA
-         app-settings-json: ${{ secrets.APP_SETTINGS }}
