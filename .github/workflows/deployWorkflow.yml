@@ -15,7 +15,7 @@ on:
     secrets:
       creds:
         required: true
-      publish-profile:
+      publishProfile:
         required: true
 
 
@@ -40,7 +40,7 @@ jobs:
     steps:
      - uses: azure/login@v1
        with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        creds: ${{secrets.creds}}
         enable-AzPSSession: true
 
      - uses: actions/download-artifact@master
@@ -53,4 +53,4 @@ jobs:
        with:
         app-name: ${{ inputs.appName }}
         package: build-art/${{ github.run_id }}.zip
-        publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.publishProfile }}
