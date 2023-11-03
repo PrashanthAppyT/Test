@@ -11,6 +11,11 @@ on:
       appName:
         required: true
         type: string
+    secrets:
+      creds:
+        required: true
+      appSettings:
+        required: true
 
 jobs:
   build:
@@ -20,7 +25,7 @@ jobs:
       uses: actions/checkout@v2
     - uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        creds: ${{secrets.creds}}
         enable-AzPSSession: true
     - uses: azure/appservice-settings@v1
       with: 
