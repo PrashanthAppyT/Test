@@ -13,9 +13,9 @@ on:
         required: true
         type: string
     secrets:
-      AZURE_CREDENTIALS:
+      creds:
         required: true
-      AZURE_LOGICAPP_PUBLISH_PROFILE:
+      publish-profile:
         required: true
 
 
