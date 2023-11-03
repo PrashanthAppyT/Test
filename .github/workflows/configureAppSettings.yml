@@ -11,11 +11,6 @@ on:
       appName:
         required: true
         type: string
-    secrets:
-      creds:
-        required: true
-      appSettings:
-        required: true
 
 jobs:
   build:
