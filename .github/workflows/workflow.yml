@@ -17,7 +17,7 @@ jobs:
   
   #Deploy LA to the dev environment
   deploy-LA-dev:
-    uses: ./.github/workflows/deployWorkFlow.yml
+    uses: ./.github/workflows/deployWorkflow.yml
     with:
       environmentType: dev
       resourceGroupName: DataResources
