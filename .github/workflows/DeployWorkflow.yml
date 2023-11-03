@@ -1,4 +1,4 @@
-name: DeploySimpleWorkflow
+name: DeployWorkflows
 
 on:
   workflow_call:
