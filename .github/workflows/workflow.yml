@@ -1,0 +1,37 @@
+name: deploy-logicapp
+
+on:
+  push:
+    branches:
+      - feature/DSLAPPServiceSettings
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+
+
+
+jobs:
+  
+  #Deploy LA to the dev environment
+  deploy-LA-dev:
+    uses: ./.github/workflows/deployWorkFlow.yml
+    with:
+      environmentType: dev
+      resourceGroupName: DataResources
+      app-name: LA-STD-VA
+    secrets: 
+      creds: ${{secrets.AZURE_CREDENTIALS}}
+      publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
+  #Deploy LA-App Settings to the dev environment
+  deploy-APPSettings-dev:
+    uses: ./.github/workflows/configureAppSettings.yml
+    with:
+      environmentType: dev
+      resourceGroupName: DataResources
+      app-name: LA-STD-VA
+    secrets: 
+      creds: ${{secrets.AZURE_CREDENTIALS}}
+      app-settings-json: ${{ secrets.APP_SETTINGS }}
