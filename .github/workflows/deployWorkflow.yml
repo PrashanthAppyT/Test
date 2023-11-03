@@ -9,7 +9,7 @@ on:
       resourceGroupName:
         required: false
         type: string
-      app-name:
+      appName:
         required: true
         type: string
     secrets:
