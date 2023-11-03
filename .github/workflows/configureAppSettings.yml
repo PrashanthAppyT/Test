@@ -30,4 +30,4 @@ jobs:
     - uses: azure/appservice-settings@v1
       with: 
          app-name: ${{ inputs.appName }}
-         app-settings-json: ${{ secrets.APP_SETTINGS }}
+         app-settings-json: ${{ secrets.appSettings }}
