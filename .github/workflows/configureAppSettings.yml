@@ -1,5 +1,21 @@
-name: DeploySimpleWorkflow2
-on: [push]
+name: DeployAppSettings
+on:
+  workflow_call:
+    inputs:
+      environmentType:
+        required: false
+        type: string
+      resourceGroupName:
+        required: false
+        type: string
+      appName:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      APP_SETTINGS:
+        required: true
 
 jobs:
   build:
@@ -7,20 +23,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: setup Node.Js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
-    - name: Install dependencies
-      run: npm install               
-    - name: Install action-cli
-      uses: numtide/action-cli@v0.7.0
     - uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS_II}}
+        creds: ${{secrets.AZURE_CREDENTIALS}}
         enable-AzPSSession: true
-    - name: Deploy App Service Settings
-      run: |        
-           az webapp config appsettings set --resource-group DataResources --name LA-STD-VA --settings @${{ secrets.APP_SETTINGS }}
-
-      
+    - uses: azure/appservice-settings@v1
+      with: 
+         app-name: ${{ inputs.appName }}
+         app-settings-json: ${{ secrets.APP_SETTINGS }}
