@@ -1,10 +1,23 @@
 name: DeploySimpleWorkflow
 
-  workflow_dispatch:
+on:
+  workflow_call:
     inputs:
-      appName:
-        description: 'app Name'
+      environmentType:
+        required: false
+        type: string
+      resourceGroupName:
+        required: false
+        type: string
+      app-name:
         required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      AZURE_LOGICAPP_PUBLISH_PROFILE:
+        required: true
+
 
 jobs:
   Build:
