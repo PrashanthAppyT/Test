@@ -31,3 +31,4 @@ jobs:
       with: 
          app-name: ${{ inputs.appName }}
          app-settings-json: ${{ secrets.appSettings }}
+         mask-inputs: false
