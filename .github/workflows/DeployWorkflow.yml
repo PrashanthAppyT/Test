@@ -45,8 +45,6 @@ jobs:
         app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
-        scm-do-build-during-deployment: true
-        enable-oryx-build: true
 
      - uses: azure/appservice-settings@v1
        with: 
