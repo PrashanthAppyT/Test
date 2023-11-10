@@ -48,9 +48,9 @@ jobs:
            pwd
      - name: Deploy to Azure Logic App1
        run: |
-           ls -l
+           cd ./workflows/stateful1
 
      - name: Deploy to Azure Logic App1
        run: |
-           az logic workflow create --resource-group "DataResources" --location "westeurope" --name "test_workflow" --definition "/home/runner/work/Test/Test/workflows/stateful1/workflow.json"
+           az logic workflow create --resource-group "DataResources" --location "westeurope" --name "test_workflow" --definition "workflow.json"
       
