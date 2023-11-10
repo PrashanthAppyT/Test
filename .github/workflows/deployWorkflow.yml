@@ -46,6 +46,9 @@ jobs:
      - name: Deploy to Azure Logic App1
        run: |
            pwd
+     - name: Deploy to Azure Logic App1
+       run: |
+           ls
 
      - name: Deploy to Azure Logic App1
        run: |
