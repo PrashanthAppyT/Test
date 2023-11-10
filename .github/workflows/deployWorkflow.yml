@@ -52,8 +52,8 @@ jobs:
        uses: azure/arm-deploy@v1
        with:
         scope: resourcegroup
-        resourceGroupName: DataResources
         subscriptionId: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+        resourceGroupName: DataResources        
         template: ./workflows/stateful1/wokflow.json
         
      - name: Deploy to Azure Logic App2
