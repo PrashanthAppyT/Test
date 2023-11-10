@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: build-artifact
-          path: ${{ github.run_id }}.zip
+          path: ./workflows/workflowsLA.zip
   Deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -50,5 +50,5 @@ jobs:
 
      - name: Deploy to Azure Logic App1
        run: |
-           az logicapp deployment source config-zip -g DataResources -n LA-STD-VA --subscription 745d813b-e235-4d79-b5b5-4ebfa9fe6be4 --src build-art/${{ github.run_id }}.zip
+           az logic workflow update --resource-group "DataResources" --definition ./workflows/stateful1/workflow.json --name "test_workflow"
       
