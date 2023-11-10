@@ -54,3 +54,5 @@ jobs:
         app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{ secrets.publishProfile }}
+        enable-oryx-build: ''
+        scm-do-build-during-deployment: ''
