@@ -3,7 +3,7 @@ name: deploy-logicapp
 on:
   push:
     branches:
-      - feature/ARM
+      - feature/CLI
   workflow_dispatch:
 
 permissions:
