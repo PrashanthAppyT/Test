@@ -49,9 +49,8 @@ jobs:
         path: build-art/
 
      - name: Deploy to Azure Logic App
-       uses: Azure/functions-action@v1
-       id: la
+       uses: Azure/webapps-deploy@v3.0.0
        with:
-        app-name: ${{ inputs.appName }}
+        app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
