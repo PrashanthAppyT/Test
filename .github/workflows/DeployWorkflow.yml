@@ -11,7 +11,7 @@ on:
 
 jobs:
   Build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Easy Zip Files
@@ -25,7 +25,7 @@ jobs:
           path: ${{ github.run_id }}.zip
   Deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [Build] 
     steps:
      - uses: azure/login@v1
