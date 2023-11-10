@@ -48,7 +48,7 @@ jobs:
            pwd
      - name: Deploy to Azure Logic App1
        run: |
-           cd ./workflows/stateful1
+           ls -la ${{ github.workspace }}
 
      - name: Deploy to Azure Logic App1
        run: |
