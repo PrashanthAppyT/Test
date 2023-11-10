@@ -43,15 +43,9 @@ jobs:
         creds: ${{secrets.creds}}
         enable-AzPSSession: true
 
-     - uses: actions/download-artifact@master
-       with:
-        name: build-artifact
-        path: build-art/
-
      - name: Deploy to Azure Logic App1
        run: |
            pwd
-           ls
 
      - name: Deploy to Azure Logic App1
        run: |
