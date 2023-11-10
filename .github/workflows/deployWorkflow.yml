@@ -53,4 +53,4 @@ jobs:
        with:
         app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
-        publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.publishProfile }}
