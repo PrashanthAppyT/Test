@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: build-artifact
-          path: ./workflows/workflowsLA.zip
+          path: ${{ github.run_id }}.zip
   Deploy:
     name: Deploy
     runs-on: ubuntu-latest
