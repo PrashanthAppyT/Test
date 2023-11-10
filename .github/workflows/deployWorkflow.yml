@@ -48,9 +48,26 @@ jobs:
         name: build-artifact
         path: build-art/
 
-     - name: Deploy to Azure Logic App
-       uses: Azure/functions-action@v1.5.1
+     - name: Deploy to Azure Logic App1
+       uses: azure/arm-deploy@v1
        with:
-        app-name: LA-STD-VA
-        package: build-art/${{ github.run_id }}.zip
-        publish-profile: ${{ secrets.publishProfile }}
+        scope: resourcegroup
+        resourceGroupName: DataResources
+        subscriptionId: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+        template: ./workflows/stateful1/wokflow.json
+        
+     - name: Deploy to Azure Logic App2
+       uses: azure/arm-deploy@v1
+       with:
+        scope: resourcegroup
+        resourceGroupName: DataResources
+        subscriptionId: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+        template: ./workflows/workflow1/wokflow.json
+
+     - name: Deploy to Azure Logic Conn
+       uses: azure/arm-deploy@v1
+       with:
+        scope: resourcegroup
+        resourceGroupName: DataResources
+        subscriptionId: 745d813b-e235-4d79-b5b5-4ebfa9fe6be4
+        template: ./workflows/connections.json
