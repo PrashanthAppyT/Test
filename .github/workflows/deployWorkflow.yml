@@ -50,5 +50,5 @@ jobs:
 
      - name: Deploy to Azure Logic App1
        run: |
-           az logic workflow update --resource-group "DataResources" --definition ./workflows/stateful1/workflow.json --name "test_workflow"
+           az logic workflow update --resource-group "DataResources" --definition @./workflows/stateful1/workflow.json --name "test_workflow"
       
