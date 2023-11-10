@@ -33,4 +33,4 @@ jobs:
       appName: LA-STD-VA
     secrets: 
       creds: ${{secrets.AZURE_CREDENTIALS}}
-      appSettings: ${{ secrets.APP_SETTINGS_SFTP }}
+      appSettings: ${{ secrets.APP_SETTINGS }}
