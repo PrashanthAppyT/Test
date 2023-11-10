@@ -1,17 +1,5 @@
 {
     "managedApiConnections": {
-        "sharepointonline": {
-            "api": {
-                "id": "/subscriptions/5159bd03-b515-48ea-a32f-55ef5ea3f19b/providers/Microsoft.Web/locations/westeurope/managedApis/sharepointonline"
-            },
-            "authentication": {
-                "type": "ManagedServiceIdentity"
-            },
-            "connection": {
-                "id": "/subscriptions/5159bd03-b515-48ea-a32f-55ef5ea3f19b/resourceGroups/rg-vo-gpp-logicapp-dev-weu-001/providers/Microsoft.Web/connections/sharepointonline"
-            },
-            "connectionRuntimeUrl": "https://4f580bae7bbec0d0.19.common.logic-westeurope.azure-apihub.net/apim/sharepointonline/a97be263dd764bfe87e84aef8f512b60"
-        }
     },
     "serviceProviderConnections": {
         "AzureFile": {
