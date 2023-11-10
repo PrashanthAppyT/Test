@@ -44,7 +44,7 @@ jobs:
        with:
         app-name: LA-STD-VA
         package: build-art/${{ github.run_id }}.zip
-        publish-profile: ${{ secrets.AZURE_LA_PP }}
+        publish-profile: ${{ secrets.AZURE_LOGICAPP_PUBLISH_PROFILE }}
 
      - uses: azure/appservice-settings@v1
        with: 
