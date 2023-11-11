@@ -48,7 +48,10 @@ jobs:
            pwd
      - name: Deploy to Azure Logic App1
        run: |
-           ls -la ${{ github.workspace }}
+           cd docker
+     - name: Deploy to Azure Logic App1
+       run: |
+           ls -la docker
 
      - name: Deploy to Azure Logic App1
        run: |
