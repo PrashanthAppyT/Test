@@ -52,4 +52,4 @@ jobs:
 
      - name: Deploy to Azure Logic App1
        run: |
-           az logic workflow create --resource-group "DataResources" --location "westeurope" --name "test_workflow" --definition "${{ github.workspace }}/workflows/workflow1/workflow.json"
+           az logic workflow update --resource-group "DataResources" --name "LA-STD-VA" --definition "${{ github.workspace }}/workflows/workflow1/workflow.json"
