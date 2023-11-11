@@ -42,16 +42,13 @@ jobs:
        with:
         creds: ${{secrets.creds}}
         enable-AzPSSession: true
-
+     - uses: actions/checkout@v2
      - name: Deploy to Azure Logic App1
        run: |
            pwd
      - name: Deploy to Azure Logic App1
        run: |
-           cd docker
-     - name: Deploy to Azure Logic App1
-       run: |
-           ls -la docker
+           ls -la ${{github.wokspace}}
 
      - name: Deploy to Azure Logic App1
        run: |
