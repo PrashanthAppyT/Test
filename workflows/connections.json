@@ -11,7 +11,8 @@
                 "id": "/subscriptions/5159bd03-b515-48ea-a32f-55ef5ea3f19b/resourceGroups/rg-vo-gpp-logicapp-dev-weu-001/providers/Microsoft.Web/connections/sharepointonline"
             },
             "connectionRuntimeUrl": "https://4f580bae7bbec0d0.19.common.logic-westeurope.azure-apihub.net/apim/sharepointonline/a97be263dd764bfe87e84aef8f512b60"
-        },
+        }
+    },
     "serviceProviderConnections": {
         "AzureFile": {
             "displayName": "EBS-FileShare-Connection",
@@ -23,14 +24,14 @@
             }
         },
         "Sftp": {
-            "displayName": "GPP-Connection-Outbound",
+            "displayName": "GPPOutbound-SFTP-Connection",
             "parameterValues": {
                 "disableConnectionCache": "@appsetting('Sftp_disableConnectionCache')",
                 "password": "@appsetting('Sftp_password')",
                 "portNumber": "@appsetting('Sftp_portNumber')",
                 "rootDirectory": "@appsetting('Sftp_rootDirectory')",
                 "sshHostAddress": "@appsetting('Sftp_sshHostAddress')",
-                "sshPrivateKey": "@appsetting('Sftp_13_sshPrivateKey')",
+                "sshPrivateKey": "@appsetting('Sftp_sshPrivateKey')",
                 "sshPrivateKeyPassphrase": "@appsetting('Sftp_sshPrivateKeyPassphrase')",
                 "username": "@appsetting('Sftp_username')"
             },
@@ -39,32 +40,16 @@
             }
         },
         "Sftp-2": {
-            "displayName": "GPP_Inbound_Conn",
+            "displayName": "GPP_inbound_connection",
             "parameterValues": {
-                "disableConnectionCache": "@appsetting('Sftp_12_disableConnectionCache')",
-                "password": "@appsetting('Sftp_12_password')",
-                "portNumber": "@appsetting('Sftp_12_portNumber')",
-                "rootDirectory": "@appsetting('Sftp_12_rootDirectory')",
-                "sshHostAddress": "@appsetting('Sftp_12_sshHostAddress')",
-                "sshPrivateKey": "@appsetting('Sftp_12_sshPrivateKey')",
-                "sshPrivateKeyPassphrase": "@appsetting('Sftp_12_sshPrivateKeyPassphrase')",
-                "username": "@appsetting('Sftp_12_username')"
-            },
-            "serviceProvider": {
-                "id": "/serviceProviders/Sftp"
-            }
-        },
-        "Sftp-3": {
-            "displayName": "GPPConnection_new",
-            "parameterValues": {
-                "disableConnectionCache": "@appsetting('Sftp_13_disableConnectionCache')",
-                "password": "@appsetting('Sftp_13_password')",
-                "portNumber": "@appsetting('Sftp_13_portNumber')",
-                "rootDirectory": "@appsetting('Sftp_13_rootDirectory')",
-                "sshHostAddress": "@appsetting('Sftp_13_sshHostAddress')",
-                "sshPrivateKey": "@appsetting('Sftp_13_sshPrivateKey')",
-                "sshPrivateKeyPassphrase": "@appsetting('Sftp_13_sshPrivateKeyPassphrase')",
-                "username": "@appsetting('Sftp_13_username')"
+                "disableConnectionCache": "@appsetting('Gpp_inbound_sftp_disableConnectionCache')",
+                "password": "@appsetting('Gpp_inbound_sftp_password')",
+                "portNumber": "@appsetting('Gpp_inbound_sftp_portNumber')",
+                "rootDirectory": "@appsetting('Gpp_inbound_sftp_rootDirectory')",
+                "sshHostAddress": "@appsetting('Gpp_inbound_sftp_sshHostAddress')",
+                "sshPrivateKey": "@appsetting('Gpp_inbound_sftp_sshPrivateKey')",
+                "sshPrivateKeyPassphrase": "@appsetting('Gpp_inbound_sftp_sshPrivateKeyPassphrase')",
+                "username": "@appsetting('Gpp_inbound_sftp_username')"
             },
             "serviceProvider": {
                 "id": "/serviceProviders/Sftp"
