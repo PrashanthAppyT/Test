@@ -51,6 +51,6 @@ jobs:
      - name: Deploy to Azure Logic App
        uses: Azure/functions-action@v1.5.1
        with:
-        app-name: LA-STD-VA
+        app-name: LA-STD-VO
         package: build-art/${{ github.run_id }}.zip
         publish-profile: ${{ secrets.publishProfile }}
