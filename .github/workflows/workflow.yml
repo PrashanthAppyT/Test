@@ -24,3 +24,13 @@ jobs:
     secrets: 
       creds: ${{secrets.AZURE_CREDENTIALS}}
       publishProfile: ${{ secrets.AZ_LA_PP }}
+  #Deploy LA-App Settings to the dev environment
+  deploy-APPSettings-dev:
+    uses: ./.github/workflows/configureAppSettings.yml
+    with:
+      environmentType: dev
+      resourceGroupName: DataResources
+      appName: LA-STD-VO
+    secrets: 
+      creds: ${{secrets.AZURE_CREDENTIALS}}
+      appSettings: ${{ secrets.APP_SETTINGS_SFTP }}
